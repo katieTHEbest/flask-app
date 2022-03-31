@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+
+<div id="overlay1" onclick="off('overlay1')">
+  <div id="texttt">Не сдавайся, путник! Длина загаданного слова: {{ len_secret }}</div>
+</div>
+
+<div style="padding:20px">
+  <h2>Подсказки</h2>
+  <button <button onclick="on('overlay1')">Первая подсказка</button>
+</div>
+
+<div id="overlay2" onclick="off('overlay2')">
+  <div id="texttt2"> У тебя всё получится! Вот один из ближайших соседов слова: {{ neighb }}</div>
+</div>
+
+<div style="padding:20px">
+  <button onclick="on('overlay2')">Вторая подсказка</button>
+</div>
+
+<script>
+function on(id) {
+    document.getElementById(id).style.display = "block";
+}
+
+function off(id) {
+    document.getElementById(id).style.display = "none";
+}
+</script>
+
+
+
+    <br>
+    <br>
+    <a href="{{ url_for('index') }}">Назад</a>
+</div>
+{% endblock %}
+

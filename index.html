@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Semantle(русский)</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Семантле</h1>
+    <p>Угадай слово по семантической близости. Загадано существительное, ОГРОМНАЯ ПРОСЬБА вводить существующие ненулевые слова!</p>
+    {% if guesses|length < 1 %}
+    <h4 style="text-align: center">Угадай слово</h4>
+    {% else %}
+    <div style = "text-align: center;">
+      <a href="/hints">
+        <button class="slide_from_bottom button">Подсказки</button>
+      </a>
+    </div>
+    <br>
+    <p>Нажми на кнопку сдаюсь, чтобы посмотреть ответ.</p>
+
+    <button onclick="myFunction()">Сдаюсь</button>
+
+    <script>
+    function myFunction() {
+      var x = document.getElementById("myDIV");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+    </script>
+
+    <div id="myDIV" style="display: none;">
+    {{ secret_word }}
+    </div>
+
+    <p><b>Note:</b> Спойлер!</p>
+
+    <br>
+    <table>
+        <tr>
+            <th>Слово</th>
+            <th>Расстояние</th>
+            <th>Насколько ты близок</th>
+            <th>Время отправки</th>
+        </tr>
+        {% for guess in guesses %}
+            <tr>
+                <td>{{ guess.content }}</td>
+                <td>{{ guess.similarity }}</td>
+                <td>{{ guess.closeness }}</td>
+                <td>{{ guess.date_created.time() }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="form">
+        <form action="/" method="POST">
+            <input type="text" name="content" id="content">
+            <input type="submit" value="Введи слово">
+        </form>
+    </div>
+    <br>
+    <div style = "text-align: center;">
+      <a href="/new_word">
+        <button class="slide_from_bottom button">Начать заново</button>
+      </a>
+    </div>
+</div>
+{% endblock %}
